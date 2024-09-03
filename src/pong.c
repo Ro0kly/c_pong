@@ -26,3 +26,13 @@ int main() {
     char a;
     char turn = 'l';
 }
+
+int get_new_coordinate(int y, char direction) {
+    int _y = y;
+    if (direction == 't') {
+        _y -= 1;
+    } else {
+        _y += 1;
+    }
+    return _y;
+}
