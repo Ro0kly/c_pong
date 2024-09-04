@@ -36,3 +36,11 @@ int get_new_coordinate(int y, char direction) {
     }
     return _y;
 }
+
+int moveshary(int y, int horiz) {
+    if (horiz == 0)
+        y = y + 1;
+    else
+        y = y - 1;
+    return y;
+}
