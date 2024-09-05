@@ -44,3 +44,12 @@ int moveshary(int y, int horiz) {
         y = y - 1;
     return y;
 }
+
+void itogimatcha(int score1, int score2) {
+    if (score1 > score2)
+        printf("Победил левый игрок");
+    else if (score2 > score1)
+        printf("Победил правый игрок");
+    else
+        printf("Ничья");
+}
