@@ -37,6 +37,14 @@ int get_new_coordinate(int y, char direction) {
     return _y;
 }
 
+int movesharx(int x, int vertic) {
+    if (vertic == 0)
+        x = x - 1;
+    else
+        x = x + 1;
+    return x;
+}
+
 int moveshary(int y, int horiz) {
     if (horiz == 0)
         y = y + 1;
