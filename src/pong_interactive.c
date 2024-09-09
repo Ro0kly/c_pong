@@ -3,15 +3,14 @@
 #include <unistd.h>
 void screen(int x, int y, int shir, int vis, int xrocket1, int yrocket1, int xrocket2, int yrocket2, int left,
             int right);                  //вывод
-int smenax(int x, int vertic, int vis);  //смена направления мяча вниз-вверх
-int smenay(int x, int y, int horiz, int shir, int xrocket1,
+int change_direction_x(int x, int vertic, int vis);  //смена направления мяча вниз-вверх
+int change_direction_y(int x, int y, int horiz, int shir, int xrocket1,
            int xrocket2);          //смена направления мяча вправо-влево
-int movesharx(int x, int vertic);  // движение мяча
-int moveshary(int y, int horiz);
+int move_ball_by_x(int x, int vertic);  // движение мяча
+int move_ball_by_y(int y, int horiz);
 int defaultpos(int y, int shirina);
 
-int proverka(int x, int left, int right, int shirina);
-void itogimatcha(int score1, int score2);
+void check_results(int score1, int score2);
 
 int get_new_coordinate(int y, char direction);
 
@@ -53,10 +52,10 @@ int main() {
                     printw("skip move l\n");
                     turn = 'l';
                 }
-                v = smenax(xshar, v, visota);
-                h = smenay(xshar, yshar, h, shirina, yrocket1, yrocket2);
-                xshar = movesharx(xshar, v);
-                yshar = moveshary(yshar, h);
+                v = change_direction_x(xshar, v, visota);
+                h = change_direction_y(xshar, yshar, h, shirina, yrocket1, yrocket2);
+                xshar = move_ball_by_x(xshar, v);
+                yshar = move_ball_by_y(yshar, h);
                 yshar = defaultpos(yshar, shirina);
             } else {
                 if (turn == 'l') {
@@ -71,10 +70,10 @@ int main() {
                             printw("go bottom\n");
                             yrocket1 = get_new_coordinate(yrocket1, 'b');
                         }
-                        v = smenax(xshar, v, visota);
-                        h = smenay(xshar, yshar, h, shirina, yrocket1, yrocket2);
-                        xshar = movesharx(xshar, v);
-                        yshar = moveshary(yshar, h);
+                        v = change_direction_x(xshar, v, visota);
+                        h = change_direction_y(xshar, yshar, h, shirina, yrocket1, yrocket2);
+                        xshar = move_ball_by_x(xshar, v);
+                        yshar = move_ball_by_y(yshar, h);
                         yshar = defaultpos(yshar, shirina);
                         turn = 'r';
                     }
@@ -90,10 +89,10 @@ int main() {
                             printw("go bottom\n");
                             yrocket2 = get_new_coordinate(yrocket2, 'b');
                         }
-                        v = smenax(xshar, v, visota);
-                        h = smenay(xshar, yshar, h, shirina, yrocket1, yrocket2);
-                        xshar = movesharx(xshar, v);
-                        yshar = moveshary(yshar, h);
+                        v = change_direction_x(xshar, v, visota);
+                        h = change_direction_y(xshar, yshar, h, shirina, yrocket1, yrocket2);
+                        xshar = move_ball_by_x(xshar, v);
+                        yshar = move_ball_by_y(yshar, h);
                         yshar = defaultpos(yshar, shirina);
                         turn = 'l';
                     }
@@ -105,7 +104,7 @@ int main() {
         usleep(46000);
     }
     endwin();
-    itogimatcha(score1, score2);
+    check_results(score1, score2);
 }
 
 int get_new_coordinate(int y, char direction) {
@@ -149,7 +148,7 @@ void screen(int x, int y, int shir, int vis, int xrocket1, int yrocket1, int xro
     }
 }
 
-int smenax(int x, int vertic, int vis) {
+int change_direction_x(int x, int vertic, int vis) {
     // vertic 0 - vverh 1 - vniz
     if (x == 1 && vertic == 0)
         vertic = 1;
@@ -158,7 +157,7 @@ int smenax(int x, int vertic, int vis) {
     return vertic;
 }
 
-int smenay(int x, int y, int horiz, int shir, int xrocket1, int xrocket2) {
+int change_direction_y(int x, int y, int horiz, int shir, int xrocket1, int xrocket2) {
     // horiz 0 - vpravo 1 - vlevo
     if (y == 2 && horiz == 1) {
         if (x >= xrocket1 && x <= xrocket1 + 2) horiz = 0;
@@ -170,7 +169,7 @@ int smenay(int x, int y, int horiz, int shir, int xrocket1, int xrocket2) {
     return horiz;
 }
 
-int movesharx(int x, int vertic) {
+int move_ball_by_x(int x, int vertic) {
     if (vertic == 0)
         x = x - 1;
     else
@@ -178,7 +177,7 @@ int movesharx(int x, int vertic) {
     return x;
 }
 
-int moveshary(int y, int horiz) {
+int move_ball_by_y(int y, int horiz) {
     if (horiz == 0)
         y = y + 1;
     else
@@ -193,7 +192,7 @@ int defaultpos(int y, int shirina) {
         return y;
 }
 
-void itogimatcha(int score1, int score2) {
+void check_results(int score1, int score2) {
     if (score1 > score2)
         printf("Победил левый игрок");
     else if (score2 > score1)
